@@ -160,7 +160,7 @@ class ViewController: UIViewController {
                 if index < self.messages.count-1 {
                     self.remmoveMessage(index: index)
                 } else  {
-                    
+                    self.resetForm()
                 }
             }
         })
@@ -174,6 +174,22 @@ class ViewController: UIViewController {
             self.status.center = self.statusPosition
             self.showMessage(index: index+1)
         })
+    }
+    
+    func resetForm() {
+        UIView.transition(with: status, duration: 0.33, options: [.curveEaseOut, .transitionFlipFromRight], animations: {
+            self.status.isHidden = true
+            self.status.center = self.statusPosition
+            self.loginButton.bounds.size.width -= 80.0
+            self.loginButton.center.y -= 60.0
+            self.loginButton.backgroundColor = UIColor(red: 0.63, green: 0.84, blue: 0.35, alpha: 1.0)
+            self.spinner.center = CGPoint(
+                x: -20.0,
+                y: 16.0
+            )
+            self.spinner.alpha = 0.0
+
+        }, completion: nil)
     }
 
   // MARK: UITextFieldDelegate
