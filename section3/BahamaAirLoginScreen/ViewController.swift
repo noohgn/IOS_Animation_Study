@@ -47,7 +47,7 @@ class ViewController: UIViewController {
   let status = UIImageView(image: UIImage(named: "banner"))
   let label = UILabel()
   let messages = ["Connecting ...", "Authorizing ...", "Sending credentials ...", "Failed"]
-
+  
   var statusPosition = CGPoint.zero
 
   // MARK: view controller methods
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     heading.center.x  -= view.bounds.width
     username.center.x -= view.bounds.width
     password.center.x -= view.bounds.width
-
+    
     cloud1.alpha = 0.0
     cloud2.alpha = 0.0
     cloud3.alpha = 0.0
@@ -101,6 +101,7 @@ class ViewController: UIViewController {
     UIView.animate(withDuration: 0.5, delay: 0.3, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: [], animations: {
         self.username.center.x += self.view.bounds.width
     }, completion: nil)
+    
     UIView.animate(withDuration: 0.5, delay: 0.4, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: [], animations: {
         self.password.center.x += self.view.bounds.width
     }, completion: nil)
@@ -108,19 +109,23 @@ class ViewController: UIViewController {
     UIView.animate(withDuration: 0.5, delay: 0.5, options: [], animations: {
         self.cloud1.alpha = 1.0
     }, completion: nil)
-
+    
     UIView.animate(withDuration: 0.5, delay: 0.7, options: [], animations: {
         self.cloud2.alpha = 1.0
     }, completion: nil)
-
+    
     UIView.animate(withDuration: 0.5, delay: 0.9, options: [], animations: {
         self.cloud3.alpha = 1.0
     }, completion: nil)
-
+    
     UIView.animate(withDuration: 0.5, delay: 1.1, options: [], animations: {
         self.cloud4.alpha = 1.0
     }, completion: nil)
-
+    animateCloud(cloud: cloud1)
+    animateCloud(cloud: cloud2)
+    animateCloud(cloud: cloud3)
+    animateCloud(cloud: cloud4)
+    
     UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0,
                    options: [], animations: {
                     self.loginButton.center.y -= 30.0
@@ -190,6 +195,18 @@ class ViewController: UIViewController {
             self.spinner.alpha = 0.0
 
         }, completion: nil)
+    }
+    
+    func animateCloud(cloud: UIImageView) {
+        let cloudSpeed = 60.0/view.frame.size.width
+        let averageSpeed = (view.frame.size.width - cloud.frame.origin.x) * cloudSpeed
+        
+        UIView.animate(withDuration: TimeInterval(averageSpeed), delay: 0.0, options: .curveLinear, animations: {
+            cloud.frame.origin.x = self.view.frame.size.width
+        }, completion: { _ in
+            cloud.frame.origin.x = -cloud.frame.size.width
+            self.animateCloud(cloud: cloud)
+        })
     }
 
   // MARK: UITextFieldDelegate
